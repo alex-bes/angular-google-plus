@@ -1,18 +1,18 @@
-/*! angular-google-plus - v0.1.3 2015-08-27 */
+/*! angular-google-plus - v0.1.3 2016-06-29 */
 /**
  * googleplus module
  */
 angular.module("googleplus", []).provider("GooglePlus", [ function() {
     /**
-     * Options object available for module
-     * options/services definition.
-     * @type {Object}
-     */
+         * Options object available for module
+         * options/services definition.
+         * @type {Object}
+         */
     var a = {};
     /**
-     * clientId
-     * @type {Number}
-     */
+         * clientId
+         * @type {Number}
+         */
     a.clientId = null;
     this.setClientId = function(b) {
         a.clientId = b;
@@ -22,9 +22,9 @@ angular.module("googleplus", []).provider("GooglePlus", [ function() {
         return a.clientId;
     };
     /**
-     * apiKey
-     * @type {String}
-     */
+         * apiKey
+         * @type {String}
+         */
     a.apiKey = null;
     this.setApiKey = function(b) {
         a.apiKey = b;
@@ -34,10 +34,22 @@ angular.module("googleplus", []).provider("GooglePlus", [ function() {
         return a.apiKey;
     };
     /**
-     * Scopes
-     * @default 'https://www.googleapis.com/auth/plus.login'
-     * @type {Boolean}
-     */
+         * apiKey
+         * @type {String}
+         */
+    a.extraLoginOptions = {};
+    this.setExtraLoginOptions = function(b) {
+        a.extraLoginOptions = b;
+        return this;
+    };
+    this.getExtraLoginOptions = function() {
+        return a.extraLoginOptions;
+    };
+    /**
+         * Scopes
+         * @default 'https://www.googleapis.com/auth/plus.login'
+         * @type {Boolean}
+         */
     a.scopes = "https://www.googleapis.com/auth/plus.login";
     this.setScopes = function(b) {
         a.scopes = b;
@@ -47,38 +59,38 @@ angular.module("googleplus", []).provider("GooglePlus", [ function() {
         return a.scopes;
     };
     /**
-     * Init Google Plus API
-     */
+         * Init Google Plus API
+         */
     this.init = function(b) {
         angular.extend(a, b);
     };
     /**
-     * Make sign-in server side
-     */
+         * Make sign-in server side
+         */
     this.enableServerSide = function() {
         a.accessType = "offline";
         a.responseType = "code token id_token gsession";
     };
     /**
-     * Make sign-in client side (default)
-     */
+         * Make sign-in client side (default)
+         */
     this.disableServerSide = function() {
         delete a.accessType;
         delete a.responseType;
     };
     /**
-     * This defines the Google Plus Service on run.
-     */
+         * This defines the Google Plus Service on run.
+         */
     this.$get = [ "$q", "$rootScope", "$timeout", function(b, c, d) {
         /**
-       * Define a deferred instance that will implement asynchronous calls
-       * @type {Object}
-       */
+             * Define a deferred instance that will implement asynchronous calls
+             * @type {Object}
+             */
         var e;
         /**
-       * NgGooglePlus Class
-       * @type {Class}
-       */
+             * NgGooglePlus Class
+             * @type {Class}
+             */
         var f = function() {};
         f.prototype.login = function() {
             e = b.defer();
@@ -91,6 +103,7 @@ angular.module("googleplus", []).provider("GooglePlus", [ function() {
                 c.access_type = a.accessType;
                 c.response_type = a.responseType;
             }
+            Object.assign(c, a.extraLoginOptions);
             gapi.auth.authorize(c, this.handleAuthResult);
             return e.promise;
         };
