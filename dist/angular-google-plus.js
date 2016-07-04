@@ -1,7 +1,28 @@
-/*! angular-google-plus - v0.1.3 2016-06-29 */
+/*! angular-google-plus - v0.1.3 2016-07-04 */
 /**
  * googleplus module
  */
+if (typeof Object.assign != "function") {
+    Object.assign = function(a) {
+        "use strict";
+        if (a === null) {
+            throw new TypeError("Cannot convert undefined or null to object");
+        }
+        a = Object(a);
+        for (var b = 1; b < arguments.length; b++) {
+            var c = arguments[b];
+            if (c !== null) {
+                for (var d in c) {
+                    if (Object.prototype.hasOwnProperty.call(c, d)) {
+                        a[d] = c[d];
+                    }
+                }
+            }
+        }
+        return a;
+    };
+}
+
 angular.module("googleplus", []).provider("GooglePlus", [ function() {
     /**
          * Options object available for module
